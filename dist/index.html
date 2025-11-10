@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6502 CPU Emulator & Debugger</title>
+<script defer src="bundle.js"></script></head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>6502 CPU EMULATOR & DEBUGGER</h1>
+        </div>
+
+        <div class="registers">
+            <h2>Registers</h2>
+            <div class="register-group">
+                <div class="register-item">
+                    <span>A:</span>
+                    <span class="register-value" id="regA">$00</span>
+                </div>
+                <div class="register-item">
+                    <span>X:</span>
+                    <span class="register-value" id="regX">$00</span>
+                </div>
+                <div class="register-item">
+                    <span>Y:</span>
+                    <span class="register-value" id="regY">$00</span>
+                </div>
+                <div class="register-item">
+                    <span>SP:</span>
+                    <span class="register-value" id="regSP">$FF</span>
+                </div>
+                <div class="register-item">
+                    <span>PC:</span>
+                    <span class="register-value" id="regPC">$0000</span>
+                </div>
+            </div>
+            
+            <h3>Processor Status Register (Flags)</h3>
+            <div class="flags-grid">
+                <div class="flag" id="flagN" title="Negative - Set when result is negative">N</div>
+                <div class="flag" id="flagV" title="Overflow - Set when arithmetic overflow occurs">V</div>
+                <div class="flag" id="flagB" title="Break - Set by BRK instruction">B</div>
+                <div class="flag" id="flagD" title="Decimal - Set for decimal mode (not implemented)">D</div>
+                <div class="flag" id="flagI" title="Interrupt - Set when interrupts are disabled">I</div>
+                <div class="flag" id="flagZ" title="Zero - Set when result is zero">Z</div>
+                <div class="flag" id="flagC" title="Carry - Set when there's a carry/borrow">C</div>
+            </div>
+            <div class="flag-value">
+                Status Register: $<span id="flagValue">24</span>
+            </div>
+        </div>
+
+        <div class="register-stack">
+            <h3>Register Stack ($0100)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th colspan="8">Stack Bytes (Hex)</th>
+                    </tr>
+                </thead>
+                <tbody id="registerStackBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="disassembly">
+            <h2>Main Window</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Line</th>
+                        <th>Source</th>
+                        <th>Address</th>
+                        <th>Bytes</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="disassemblyBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="memory">
+            <h2>Memory Viewer</h2>
+            <div class="memory-tabs">
+                <div class="memory-tab active" data-tab="memory1">Memory 1</div>
+                <div class="memory-tab" data-tab="memory2">Memory 2</div>
+            </div>
+            
+            <div class="memory-content active" id="memory1-content">
+                <div class="memory-controls">
+                    <input type="text" id="memoryAddr" value="$0000" placeholder="Address">
+                    <button id="gotoMemoryBtn">Goto</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Address</th>
+                            <th>Hex Data</th>
+                            <th>ASCII</th>
+                        </tr>
+                    </thead>
+                    <tbody id="memoryBody">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="memory-content" id="memory2-content">
+                <div class="memory2-controls">
+                    <input type="text" id="memory2Addr" value="$0000" placeholder="Address">
+                    <button id="gotoMemory2Btn">Goto</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Address</th>
+                            <th>Hex Data</th>
+                            <th>ASCII</th>
+                        </tr>
+                    </thead>
+                    <tbody id="memory2Body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="stepBtn">Step</button>
+            <button id="resetBtn">Reset</button>
+            <button id="loadBtn">Load Program (.asm/.bin/.hex)</button>
+        </div>
+    </div>
+</body>
+</html>

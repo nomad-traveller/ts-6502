@@ -1,0 +1,111 @@
+Project Restructure Plan
+Phase 1: Foundation (Day 1)
+ts-6502/
+├── src/
+│   ├── core/
+│   │   ├── cpu.ts          # Pure CPU logic
+│   │   ├── memory.ts       # Memory management
+│   │   └── instruction.ts   # Instruction definitions
+│   ├── ui/
+│   │   ├── components/      # Reusable UI components
+│   │   │   ├── registers.ts
+│   │   │   ├── memory.ts
+│   │   │   └── disassembly.ts
+│   │   ├── main.ts         # Main UI controller
+│   │   └── styles.css      # All CSS
+│   └── utils/
+│       ├── file-loader.ts   # File handling
+│       └── assembler.ts    # Assembly parsing
+├── dist/                  # Built files
+├── tests/                 # Unit tests
+└── docs/                  # Documentation
+Phase 2: Core Engine (Day 2)
+- Milestone 1: CPU + Memory work perfectly
+- Milestone 2: All 6502 instructions implemented
+- Milestone 3: Disassembly engine working
+- Test: Simple program loads and executes
+Phase 3: UI Components (Day 3)
+- Milestone 4: Register display component
+- Milestone 5: Memory viewer component  
+- Milestone 6: Disassembly viewer component
+- Test: All components update independently
+Phase 4: Integration (Day 4)
+- Milestone 7: File loading system
+- Milestone 8: Tabbed interface
+- Milestone 9: Responsive design
+- Test: Complete workflow works
+Phase 5: Polish (Day 5)
+- Milestone 10: Error handling
+- Milestone 11: Keyboard shortcuts
+- Milestone 12: Performance optimization
+- Test: Production ready
+Key Principles to Prevent Breakage:
+1. Modular Architecture
+// Each component is self-contained
+class RegisterDisplay {
+    private element: HTMLElement;
+    constructor(container: HTMLElement) { /* ... */ }
+    update(cpu: CPU6502): void { /* ... */ }
+}
+2. Clear Interfaces
+interface CPUInterface {
+    step(): number;
+    reset(): void;
+    readByte(address: number): number;
+}
+3. Test-Driven Development
+// Test each component independently
+describe('CPU6502', () => {
+    it('should execute LDA immediate', () => {
+        const cpu = new CPU6502();
+        cpu.memory[0] = 0xA9;
+        cpu.memory[1] = 0x42;
+        cpu.step();
+        expect(cpu.A).toBe(0x42);
+    });
+});
+4. Incremental Builds
+# Build script that validates each step
+npm run build:cpu      # Just CPU
+npm run build:ui       # Just UI
+npm run build:test      # Run tests
+npm run build:all      # Full build
+5. Git Strategy
+# Commit after each milestone
+git commit -m "feat: CPU core with LDA/STA instructions"
+git commit -m "feat: register display component"
+git tag -a v0.1 -m "CPU core complete"
+Immediate Action Plan:
+Today: Backup & Restart
+1. Backup current work: cp -r ts-6502 ts-6502-backup
+2. Create new structure: Follow the directory layout above
+3. Migrate CPU code: Copy just the working CPU logic
+4. Test CPU: Ensure it works before adding UI
+Tomorrow: Build Incrementally
+1. Morning: Get CPU + Memory working with tests
+2. Afternoon: Add one UI component at a time
+3. Evening: Test each component independently
+Rule: Never Break Working Code
+- Git checkpoint after each milestone
+- Tests must pass before proceeding
+- One major feature per commit
+Recommended Tools:
+Development Setup
+{
+  scripts: {
+    dev: webpack serve --mode development,
+    build: webpack --mode production,
+    test: jest,
+    lint: eslint src/**/*.ts
+  }
+}
+Quality Assurance
+- ESLint: Code quality
+- Prettier: Code formatting  
+- Jest: Unit testing
+- TypeScript: Type safety
+Decision Point:
+Option A: Continue fixing current broken code (high risk)
+Option B: Start fresh with structured approach (recommended)
+My recommendation: Choose Option B. Take 2 days to rebuild properly, then you'll have a solid foundation that won't break.
+Would you like me to help you implement this structured approach? We can start with just the CPU core and build up incrementally from there.

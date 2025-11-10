@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test 6502 Emulator</title>
+</head>
+<body>
+    <h1>Testing 6502 Emulator Bundle</h1>
+    <div id="test-output"></div>
+    <script src="dist/bundle.js"></script>
+    <script>
+        setTimeout(() => {
+            const output = document.getElementById('test-output');
+            if (typeof MainUI !== 'undefined') {
+                output.innerHTML = '<p style="color: green;">✅ MainUI class loaded successfully</p>';
+            } else {
+                output.innerHTML = '<p style="color: red;">❌ MainUI class not found</p>';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
